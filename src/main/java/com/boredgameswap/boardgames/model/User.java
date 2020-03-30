@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users", uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
+@Table(name = "users",
+        uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
 public class User {
 
     @Id
@@ -26,11 +27,14 @@ public class User {
     @Email
     private String email;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Game> games;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     protected User() {}
