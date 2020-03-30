@@ -1,10 +1,12 @@
 package com.boredgameswap.boardgames.service;
 
-import com.boredgameswap.boardgames.dao.UserRepository;
 import com.boredgameswap.boardgames.model.User;
+import com.boredgameswap.boardgames.repository.UserRepository;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,8 +20,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void create(User user) {
-        userRepository.save(user);
+    public User create(User user) {
+        return userRepository.save(user);
     }
 
     public Iterable<User> getAllUsers() {
@@ -33,6 +35,14 @@ public class UserService {
     public void deleteUser(UUID id) {
         Optional<User> user = userRepository.findById(id);
         user.ifPresent(userRepository::delete);
+    }
+
+    public User getUserByEmail(String email) {
+        List<User> users = Lists.newArrayList(userRepository.findAll());
+        return users.stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst()
+                .orElse(null);
     }
 //
 //    public int updateUser(UUID id, User user) {

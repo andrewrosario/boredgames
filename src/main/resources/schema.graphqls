@@ -1,0 +1,43 @@
+type Query {
+    users: [User]
+    userByEmail(email: String): User
+}
+
+type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    reviews: [Review]
+    games: [Game]
+}
+
+type Game {
+    id: ID!
+    name: String!
+    description: String!
+    genre: Genre!
+    user: User!
+    yearReleased: Int
+    numberOfPlayers: Int!
+    reviews: [Review]
+}
+
+enum Genre {
+    FAMILY
+    DEXTERITY
+    TRIVIA
+    PARTY
+    STRATEGY
+    CREATIVE
+    COOPERATIVE
+}
+
+type Review {
+    id: ID!
+    title: String!
+    review: String!
+    rating: Int!
+    game: Game
+    user: User
+}

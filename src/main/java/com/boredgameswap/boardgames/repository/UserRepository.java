@@ -1,4 +1,4 @@
-package com.boredgameswap.boardgames.dao;
+package com.boredgameswap.boardgames.repository;
 
 import com.boredgameswap.boardgames.model.User;
 import org.springframework.data.repository.CrudRepository;

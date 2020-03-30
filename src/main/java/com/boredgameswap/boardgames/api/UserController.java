@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("api/v1/user")
 @RestController
@@ -21,26 +21,26 @@ public class UserController {
     }
 
     @PostMapping
-    public void create(@Valid @NotNull @RequestBody User user) {
-        userService.create(user);
+    public User create(@Valid @NotNull @RequestBody User user) {
+        return userService.create(user);
     }
-//
+
     @GetMapping
-    public List<User> getAllUsers() {
+    public Iterable<User> getAllUsers() {
         return userService.getAllUsers();
     }
-//
-//    @GetMapping(path = "{id}")
-//    public User getUserById(@PathVariable("id") UUID id) {
-//        return userService.getUserById(id)
-//                .orElse(null);
-//    }
-//
-//    @DeleteMapping(path = "{id}")
-//    public void deleteUserById(@PathVariable("id") UUID id) {
-//        userService.deleteUser(id);
-//    }
-//
+
+    @GetMapping(path = "{id}")
+    public User getUserById(@PathVariable("id") UUID id) {
+        return userService.getUserById(id)
+                .orElse(null);
+    }
+
+    @DeleteMapping(path = "{id}")
+    public void deleteUserById(@PathVariable("id") UUID id) {
+        userService.deleteUser(id);
+    }
+
 //    @PutMapping(path = "{id}")
 //    public void updateUser(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody User user) {
 //        userService.updateUser(id, user);
