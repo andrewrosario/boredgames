@@ -1,5 +1,8 @@
 package com.boredgameswap.boardgames.graphql;
 
+import com.boredgameswap.boardgames.graphql.datafetches.GameDataFetchers;
+import com.boredgameswap.boardgames.graphql.datafetches.ReviewDataFetchers;
+import com.boredgameswap.boardgames.graphql.datafetches.UserDataFetchers;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import graphql.GraphQL;
@@ -19,7 +22,11 @@ public class GraphQLProvider {
     private GraphQL graphQL;
 
     @Autowired
-    com.boredgameswap.boardgames.graphql.GraphQLDataFetchers graphQLDataFetchers;
+    UserDataFetchers userDataFetchers;
+    @Autowired
+    GameDataFetchers gameDataFetchers;
+    @Autowired
+    ReviewDataFetchers reviewDataFetchers;
 
     @Bean
     public GraphQL graphQL() {
@@ -44,8 +51,14 @@ public class GraphQLProvider {
     private RuntimeWiring buildWiring() {
         return RuntimeWiring.newRuntimeWiring()
                 .type(TypeRuntimeWiring.newTypeWiring("Query")
-                        .dataFetcher("users", graphQLDataFetchers.getUsersDataFetcher())
-                        .dataFetcher("userByEmail", graphQLDataFetchers.getUserByEmail()))
+                        .dataFetcher("users", userDataFetchers.getUsersDataFetcher())
+                        .dataFetcher("userByEmail", userDataFetchers.getUserByEmailFetcher())
+                        .dataFetcher("games", gameDataFetchers.getAllGames())
+                        .dataFetcher("reviews", reviewDataFetchers.getAllReviews()))
+                .type(TypeRuntimeWiring.newTypeWiring("Mutation")
+                    .dataFetcher("createUser", userDataFetchers.createUserFetcher())
+                    .dataFetcher("createGame", gameDataFetchers.createGameFetcher())
+                .dataFetcher("createReview", reviewDataFetchers.createReview()))
                 .build();
     }
 }

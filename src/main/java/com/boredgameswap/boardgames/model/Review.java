@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
@@ -25,20 +26,22 @@ public class Review {
     private String title;
 
     @NotBlank
-    private String review;
+    private String description;
 
-    @NotBlank
+    @NotNull
     private int rating;
 
-    public Review(User user,
-                  Game game,
+    public Review() { }
+
+    public Review(@JsonProperty("user")User user,
+                  @JsonProperty("game")Game game,
                   @JsonProperty("title") @NotBlank String title,
-                  @JsonProperty("review") @NotBlank String review,
+                  @JsonProperty("description") @NotBlank String description,
                   @JsonProperty("rating") @NotBlank int rating) {
         this.user = user;
         this.game = game;
         this.title = title;
-        this.review = review;
+        this.description = description;
         this.rating = rating;
     }
 
@@ -58,12 +61,12 @@ public class Review {
         this.title = title;
     }
 
-    public String getReview() {
-        return review;
+    public String getDescription() {
+        return description;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getRating() {
@@ -74,4 +77,11 @@ public class Review {
         this.rating = rating;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 }

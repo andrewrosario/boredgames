@@ -1,18 +1,17 @@
 package com.boredgameswap.boardgames.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "games")
 public class Game {
-    private enum Genre {
+    public enum Genre {
         FAMILY,
         DEXTERITY,
         TRIVIA,
@@ -32,14 +31,14 @@ public class Game {
     @NotBlank
     private String description;
 
-    @NotBlank
+    @NotNull
     private Genre genre;
 
     @Max(2020)
     @Min(0)
     private int yearReleased;
 
-    @NotBlank
+    @NotNull
     @Min(1)
     private int numberOfPlayers;
 
@@ -52,16 +51,18 @@ public class Game {
 
     protected Game() {}
 
-    public Game(@JsonProperty("name") @NotBlank String name,
-                @JsonProperty("description") @NotBlank String description,
-                @JsonProperty("genre") @NotBlank Genre genre,
-                @JsonProperty("yearReleased") @Max(2020) @Min(0) int yearReleased,
+    public Game(@NotBlank String name,
+                @NotBlank String description,
+                @NotBlank Genre genre,
+                @Max(2020) @Min(0) int yearReleased,
+                @NotBlank int numberOfPlayers,
                 User user) {
         this.name = name;
         this.description = description;
         this.genre = genre;
         this.yearReleased = yearReleased;
         this.user = user;
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     public UUID getId() {
@@ -122,5 +123,9 @@ public class Game {
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -5,8 +5,6 @@ import com.boredgameswap.boardgames.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RequestMapping("api/v1/user")
@@ -18,11 +16,6 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @PostMapping
-    public User create(@Valid @NotNull @RequestBody User user) {
-        return userService.create(user);
     }
 
     @GetMapping

@@ -2,11 +2,13 @@ package com.boredgameswap.boardgames.service;
 
 import com.boredgameswap.boardgames.model.User;
 import com.boredgameswap.boardgames.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +22,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User create(User user) {
+    public User create(Map<String, Object> userInput) {
+        ObjectMapper mapper = new ObjectMapper();
+        User user = mapper.convertValue(userInput, User.class);
         return userRepository.save(user);
     }
 

@@ -1,16 +1,16 @@
-package com.boredgameswap.boardgames.graphql;
+package com.boredgameswap.boardgames.graphql.datafetches;
 
 import com.boredgameswap.boardgames.service.UserService;
 import graphql.schema.DataFetcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
-public class GraphQLDataFetchers {
-    private UserService userService;
+import java.util.Map;
 
-    public GraphQLDataFetchers(UserService userService) {
-        this.userService = userService;
-    }
+@Component
+public class UserDataFetchers {
+    @Autowired
+    private UserService userService;
 
     public DataFetcher getUsersDataFetcher() {
         return dataFetchingEnvironment -> {
@@ -18,10 +18,18 @@ public class GraphQLDataFetchers {
         };
     }
 
-    public DataFetcher getUserByEmail() {
+    public DataFetcher getUserByEmailFetcher() {
         return dataFetchingEnvironment -> {
             String email = dataFetchingEnvironment.getArgument("email");
             return userService.getUserByEmail(email);
         };
     }
+
+    public DataFetcher createUserFetcher() {
+        return dataFetchingEnvironment -> {
+            Map<String, Object> userInput = dataFetchingEnvironment.getArgument("userInput");
+            return userService.create(userInput);
+        };
+    }
+
 }

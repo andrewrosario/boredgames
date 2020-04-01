@@ -47,11 +47,9 @@ public class User {
         this.email = email;
     }
 
-    public User(@JsonProperty("id") UUID id,
-                @JsonProperty("firstName") String firstName,
+    public User(@JsonProperty("firstName") String firstName,
                 @JsonProperty("lastName") String lastName,
                 @JsonProperty("email") String email) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

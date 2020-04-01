@@ -1,6 +1,14 @@
 type Query {
     users: [User]
     userByEmail(email: String): User
+    games: [Game]
+    reviews: [Review]
+}
+
+type Mutation {
+    createUser(userInput: UserInput): User
+    createGame(userEmail: String, game: GameInput): Game
+    createReview(reviewInput: ReviewInput, userId: String, gameId: String): Review
 }
 
 type User {
@@ -10,6 +18,21 @@ type User {
     email: String!
     reviews: [Review]
     games: [Game]
+}
+
+input UserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+}
+
+input GameInput {
+    name: String
+    description: String
+    yearReleased: Int
+    numberOfPlayers: Int
+    userEmail: String
+    genre: Genre
 }
 
 type Game {
@@ -36,8 +59,14 @@ enum Genre {
 type Review {
     id: ID!
     title: String!
-    review: String!
+    description: String!
     rating: Int!
     game: Game
     user: User
+}
+
+input ReviewInput {
+    title: String
+    description: String
+    rating: Int
 }
