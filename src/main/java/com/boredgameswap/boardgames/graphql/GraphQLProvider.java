@@ -58,7 +58,8 @@ public class GraphQLProvider {
                 .type(TypeRuntimeWiring.newTypeWiring("Mutation")
                     .dataFetcher("createUser", userDataFetchers.createUserFetcher())
                     .dataFetcher("createGame", gameDataFetchers.createGameFetcher())
-                .dataFetcher("createReview", reviewDataFetchers.createReview()))
+                .dataFetcher("createReview", reviewDataFetchers.createReview())
+                .dataFetcher("login", userDataFetchers.login()))
                 .build();
     }
 }

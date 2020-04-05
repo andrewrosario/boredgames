@@ -1,5 +1,6 @@
 package com.boredgameswap.boardgames.graphql.datafetches;
 
+import com.boredgameswap.boardgames.service.AuthService;
 import com.boredgameswap.boardgames.service.UserService;
 import graphql.schema.DataFetcher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import java.util.Map;
 public class UserDataFetchers {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthService authService;
 
     public DataFetcher getUsersDataFetcher() {
         return dataFetchingEnvironment -> {
@@ -32,4 +35,14 @@ public class UserDataFetchers {
         };
     }
 
+    public DataFetcher login() {
+        return dataFetchingEnvironment -> {
+            String email = dataFetchingEnvironment.getArgument("email");
+            String password = dataFetchingEnvironment.getArgument("password");
+            return authService.login(email, password);
+        };
+
+    }
 }
+
+

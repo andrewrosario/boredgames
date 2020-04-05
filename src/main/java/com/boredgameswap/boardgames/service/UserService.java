@@ -5,6 +5,7 @@ import com.boredgameswap.boardgames.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,16 +16,20 @@ import java.util.UUID;
 @Service
 public class UserService {
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public User create(Map<String, Object> userInput) {
         ObjectMapper mapper = new ObjectMapper();
         User user = mapper.convertValue(userInput, User.class);
+        String newPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(newPassword);
         return userRepository.save(user);
     }
 

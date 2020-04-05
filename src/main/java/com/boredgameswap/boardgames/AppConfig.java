@@ -17,18 +17,4 @@ public class AppConfig {
                 .type(HikariDataSource.class)
                 .build();
     }
-
-//    @Bean
-//    GraphQLSchema schema() {
-//        return GraphQLSchema.newSchema()
-//                .query(GraphQLObjectType.newObject()
-//                        .name("query")
-//                        .field(field -> field
-//                                .name("test")
-//                                .type(Scalars.GraphQLString)
-//                                .dataFetcher(environment -> "response")
-//                        )
-//                        .build())
-//                .build();
-//    }
 }
