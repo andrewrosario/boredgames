@@ -29,7 +29,7 @@ public class AuthService {
                     .sign(Algorithm.HMAC512("SUPERSECRETSTRING".getBytes()));
             return new LoginPayload(jwt, user);
         }
-        throw new RuntimeException();
+        throw new RuntimeException("Bad Password");
     }
 
     public Boolean verify(String jwt) {
